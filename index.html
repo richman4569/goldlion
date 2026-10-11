@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GOLDLION</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('bg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            filter: blur(8px); 
+            z-index: -1;
+            transform: scale(1.1); 
+        }
+
+        .container {
+            text-align: center;
+            max-width: 400px; 
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .logo {
+            width: 100%;
+            max-width: 260px; 
+            height: auto;
+            margin-bottom: 20px; 
+            filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+        }
+
+        .rating-box {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            padding: 8px 15px;
+            border-radius: 30px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .rating-stars {
+            color: #ffcc00;
+            margin-right: 5px;
+        }
+
+        .trust-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 340px;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+        .trust-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 10px 2px;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 400;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .trust-icon {
+            font-size: 18px;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .btn-img {
+            width: 100%;
+            max-width: 280px; 
+            height: auto;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        .btn-img:hover {
+            transform: translateY(-3px) scale(1.03);
+            filter: brightness(1.1);
+        }
+
+        /* ----------------------------------------- */
+        /* Social Proof Styles (ปรับเหลือ 1 กล่องรีวิว)  */
+        /* ----------------------------------------- */
+        .social-proof-panel {
+            width: 100%;
+            max-width: 340px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: 18px;
+            padding: 16px 14px;
+            margin-bottom: 25px;
+            color: #fff;
+            text-align: left;
+        }
+        .proof-title {
+            font-size: 13px;
+            color: #ffcc00;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 12px;
+        }
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 8px;
+            border-radius: 10px;
+        }
+        .stat-num {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2ea34a;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: #a1a1aa;
+        }
+        .review-box {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-height: 75px; /* ล็อกความสูงเพื่อไม่ให้หน้าเว็บกระตุกขยับตอนเปลี่ยนคำ */
+        }
+        .review-card {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 10px 12px;
+            border-radius: 12px;
+            font-size: 11.5px;
+            border-left: 3px solid #ffcc00;
+            animation: fadeInDown 0.5s ease-out; 
+        }
+        .review-user {
+            font-weight: 400;
+            color: #f4f4f5;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4px;
+        }
+        .review-text {
+            color: #d4d4d8;
+            line-height: 1.4;
+        }
+        /* ----------------------------------------- */
+
+        .slider-wrapper {
+            width: 100%;
+            max-width: 340px; 
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            margin-bottom: 25px; 
+        }
+        .slider {
+            display: flex;
+            width: 100%;
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .slider img {
+            width: 100%;
+            height: auto;
+            display: block;
+            flex-shrink: 0;
+        }
+
+        .order-panel {
+            width: 100%;
+            max-width: 360px; 
+            background: rgba(24, 24, 28, 0.95); 
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 18px 14px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.7);
+            color: #fff;
+            text-align: left;
+        }
+
+        .order-header-wrapper {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .order-header {
+            font-size: 17px;
+            font-weight: 600;
+            color: #ffcc00; 
+            margin-bottom: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .live-clock {
+            font-size: 12px;
+            color: #8a8a93;
+        }
+
+        .order-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 420px;
+            overflow: hidden; 
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 12px 14px;
+            border-radius: 14px;
+            border-left: 3px solid #2ea34a; 
+            animation: fadeInDown 0.4s ease-out; 
+            gap: 10px;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .item-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .item-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(46, 163, 74, 0.15);
+            border: 1px solid rgba(46, 163, 74, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .item-info {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            flex: 1; 
+        }
+
+        .item-user {
+            font-size: 13px;
+            font-weight: 400;
+            color: #f4f4f5;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: clip; 
+        }
+
+        .item-time {
+            font-size: 11px;
+            color: #71717a;
+            margin-top: 3px;
+        }
+
+        .item-right {
+            text-align: right;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: center;
+            flex-shrink: 0;
+            width: 95px; 
+        }
+
+        .item-amount {
+            font-size: 15px;
+            font-weight: 600;
+            color: #2ea34a; 
+            margin-bottom: 2px;
+        }
+
+        .item-status {
+            font-size: 11px;
+            color: #2ea34a;
+            background: rgba(46, 163, 74, 0.15);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: 400;
+            white-space: nowrap; 
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="logo.png" alt="BF CLUB Logo" class="logo">
+        
+        <div class="rating-box">
+            <span class="rating-stars">⭐⭐⭐⭐⭐</span> 4.9/5.0
+        </div>
+
+        <div class="trust-container">
+            <div class="trust-card">
+                <span class="trust-icon">🛡️</span>
+                <span>ดูแลตลอด 24 ชั่วโมง</span>
+            </div>
+            <div class="trust-card">
+                <span class="trust-icon">⭐</span>
+                <span>มั่นคง 100% ไม่มีโกง</span>
+            </div>
+        </div>
+        
+        <div class="btn-container">
+            <a href="รออออออออออ" target="_blank">
+                <img src="button1.png" alt="สั่งซื้อสินค้า" class="btn-img">
+            </a>
+            <a href="https://lin.ee/XCqyoDR" target="_blank">
+                <img src="button2.png" alt="ติดต่อสอบถาม" class="btn-img">
+            </a>
+        </div>
+
+        <div class="social-proof-panel">
+            <div class="proof-title">🏆การรีวิวจากผู้ใช้งานจริง🏆</div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-num">75,600+</div>
+                    <div class="stat-label">ยูสเซอร์ทั้งหมด</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">99.8%</div>
+                    <div class="stat-label">พึงพอใจบริการ</div>
+                </div>
+            </div>
+
+            <div class="review-box" id="dynamicReviewBox"></div>
+        </div>
+
+        <div class="slider-wrapper">
+            <div class="slider" id="slider">
+                <img src="slide1.png" alt="Slide 1">
+                <img src="slide2.png" alt="Slide 2">
+                <img src="slide3.png" alt="Slide 3">
+                <img src="slide4.png" alt="Slide 4">
+                <img src="slide5.png" alt="Slide 5">
+            </div>
+        </div>
+
+        <div class="order-panel">
+            <div class="order-header-wrapper">
+                <div class="order-header">💰 รายการล่าสุด 💰</div>
+                <div class="live-clock" id="liveClock">กำลังโหลดเวลา...</div>
+            </div>
+            
+            <div class="order-list" id="orderList"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // --- ข้อมูลนำหน้าเบอร์โทรศัทพ์ ---
+        const prefixes = [
+            "080", "081", "082", "083", "084", "085", "086", "087", "088", "089", 
+            "090", "091", "092", "093", "094", "095", "096", "097", "098", "099", 
+            "061", "062", "063", "064", "065"
+        ];
+
+        // --- คลังข้อความรีวิวจากลูกค้า (จัดเต็ม 20 ข้อความ) ---
+        const reviewTexts = [
+            "ตอนแรกก็ลังเล แต่พอลองแล้วระบบไวมาก ได้ของจริง แอดมินคุยดีประทับใจครับ",
+            "มั่นใจเจ้านี้ที่สุดแล้วค่ะ เติมกี่รอบก็ไม่มีปัญหา แนะนำเพื่อนๆ มาใช้กันหลายคนแล้ว",
+            "ระบบออโต้เสร็จไวมาก ไม่ถึง 2 นาทีเงินเข้าเลย มั่นคงไว้ใจได้จริงครับ",
+            "ใช้บริการเว็บนี้ประจำ ปลอดภัย 100% ไม่มีประวัติโกง สบายใจได้เลยค่ะ",
+            "แอดมินบริการดีตอบแชตไวมาก แนะนำเลยครับ ไม่ผิดหวังแน่นอน",
+            "ลองเปิดใจใช้ครั้งแรกติดใจเลย ของเขาดีจริง ระบบเสถียรมากค่ะ",
+            "24 ชั่วโมงของจริง ดึกแค่ไหนก็ทำรายการได้ไวปานสายฟ้า",
+            "ยืนยันอีกเสียงว่าได้จริงชัวร์ครับ",
+            "ชอบความซื่อสัตย์ของเว็บนี้ จ่ายเต็มจำนวนไม่จุกจิก",
+            "ระบบใช้งานง่ายมาก มือใหม่ก็ทำรายการได้สบายๆ ไม่ซับซ้อนเลยค่ะ",
+            "ถอนปุ๊บเข้าปั๊บ ไวเวอร์! ยกให้เป็นที่หนึ่งในใจเลยตอนนี้",
+            "แอดมินดูแลดียิ่งกว่าวีไอพี มีปัญหาทักปุ๊บตอบปั๊บ ไม่ทิ้งลูกค้าแน่นอน",
+            "เว็บตรงไม่ผ่านเอเยนต์ มั่นคงทางการเงินสูงมาก เล่นได้เท่าไหร่จ่ายจริงครบทุกบาท",
+            "หามานานเจ้านี้แหละที่จริงใจ ไม่จกตา ได้รับของจริงรวดเร็วทันใจ",
+            "การันตีความปลอดภัยเลยครับ ตั้งแต่ใช้มาไม่เคยเจอปัญหาเลย ดีเยี่ยมจริงๆ",
+            "ประทับใจความเร็วในการปรับยอด ยอดเยอะแค่ไหนก็เสร็จภายในแป๊บเดียว",
+            "เพื่อนแนะนำมาอีกที ทีแรกไม่เชื่อ พอลองใช้เองบอกเลยว่ารู้งี้เล่นเว็บนี้นานแล้ว",
+            "เครดิตแน่น รีวิวเพียบขนาดนี้ สบายใจหายห่วงเลยคับ",
+            "ยกให้เป็นที่ 1 ของวงการเลยครับ ระบบดีที่สุดตั้งแต่เคยเจอมา",
+            "จ่ายชัวร์ มั่นคง มั่นใจ ใช้งานคลับนี้ไม่มีคำว่าผิดหวังแน่นอนค่ะ"
+        ];
+
+        // ฟังก์ชันสุ่มเบอร์โทรลูกค้าให้อยู่ในฟอร์แมต [คุณลูกค้า: 0XX-XXX-XXXX]
+        function generateRandomUser() {
+            const randomPrefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+            const d4 = Math.floor(Math.random() * 10);
+            const d5 = Math.floor(Math.random() * 10);
+            const d6 = Math.floor(Math.random() * 10);
+            return "คุณลูกค้า: " + randomPrefix + "-" + d4 + d5 + d6 + "-XXXX";
+        }
+
+        // --- ระบบสุ่มเปลี่ยนรีวิว 1 ข้อความ ทุกๆ 15 วินาที ---
+        function renderDynamicReview() {
+            const box = document.getElementById('dynamicReviewBox');
+            const randomIndex = Math.floor(Math.random() * reviewTexts.length);
+            
+            // สุ่มจำนวนดาวแบบสมจริง (สุ่มให้ได้ 5 ดาวบ่อยกว่า 4 ดาว)
+            const stars = Math.random() > 0.15 ? "⭐⭐⭐⭐⭐" : "⭐⭐⭐⭐•";
+
+            box.innerHTML = `
+                <div class="review-card">
+                    <div class="review-user">${generateRandomUser()} <span style="color:#ffcc00">${stars}</span></div>
+                    <div class="review-text">"${reviewTexts[randomIndex]}"</div>
+                </div>
+            `;
+        }
+        
+        // เรียกใช้ครั้งแรกทันที และเปลี่ยนทุกๆ 15,000 มิลลิวินาที (15 วินาที)
+        renderDynamicReview();
+        setInterval(renderDynamicReview, 15000);
+
+
+        // --- ระบบสไลด์ภาพลื่นไหล ---
+        const slider = document.getElementById('slider');
+        let index = 0;
+        const totalImages = 5; 
+        
+        setInterval(() => {
+            index++;
+            if (index >= totalImages) { 
+                index = 0; 
+            }
+            slider.style.transform = `translateX(${-index * 100}%)`;
+        }, 3000); 
+
+        // --- ระบบนาฬิกาเวลาปัจจุบัน ---
+        function updateClock() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = now.toLocaleDateString('th-TH', options);
+            const timeStr = now.toLocaleTimeString('th-TH');
+            document.getElementById('liveClock').innerHTML = dateStr + " " + timeStr;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // --- ระบบสุ่มออเดอร์แจ้งเตือนเงินเข้าบอร์ดล่าง ---
+        const amounts = [
+            12500, 15900, 18900, 24500, 29900, 32000, 35900, 38500, 42000, 44900,
+            890, 150, 350, 590, 890, 1200, 1590, 2350, 3190, 4500,
+            250, 450, 690, 990, 1350, 1690, 2450, 4800, 5500, 7990
+        ];
+
+        function getRandomAmount() {
+            const randomPrice = amounts[Math.floor(Math.random() * amounts.length)];
+            return randomPrice.toLocaleString('th-TH') + " ฿";
+        }
+
+        function createRandomOrder(timeText) {
+            const amountStr = getRandomAmount();
+            return '<div class="order-item">' +
+                    '<div class="item-left">' +
+                        '<div class="item-icon">💲</div>' +
+                        '<div class="item-info">' +
+                            '<div class="item-user">' + generateRandomUser() + '</div>' +
+                            '<div class="item-time">' + timeText + '</div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="item-right">' +
+                        '<div class="item-amount">' + amountStr + '</div>' +
+                        '<div class="item-status">✓ จ่ายแล้ว</div>' +
+                    '</div>' +
+                '</div>';
+        }
+
+        const orderList = document.getElementById('orderList');
+        orderList.innerHTML = 
+            createRandomOrder("เมื่อสักครู่นี้") +
+            createRandomOrder("1 นาทีที่แล้ว") +
+            createRandomOrder("2 นาทีที่แล้ว") +
+            createRandomOrder("4 นาทีที่แล้ว");
+
+        function startOrderLoop() {
+            const minTime = 20000; 
+            const maxTime = 60000; 
+            const randomTime = Math.floor(Math.random() * (maxTime - minTime + 1)) + minTime; 
+
+            setTimeout(() => {
+                const newOrder = createRandomOrder("เมื่อสักครู่นี้");
+                orderList.insertAdjacentHTML('afterbegin', newOrder);
+                
+                if (orderList.children.length > 4) {
+                    orderList.removeChild(orderList.lastChild);
+                }
+                
+                if(orderList.children[1]) orderList.children[1].querySelector('.item-time').innerText = "1 นาทีที่แล้ว";
+                if(orderList.children[2]) orderList.children[2].querySelector('.item-time').innerText = "2 นาทีที่แล้ว";
+                if(orderList.children[3]) orderList.children[3].querySelector('.item-time').innerText = "4 นาทีที่แล้ว";
+                
+                startOrderLoop(); 
+            }, randomTime);
+        }
+        startOrderLoop();
+    </script>
+
+</body>
+</html>
