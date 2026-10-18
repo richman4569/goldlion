@@ -4,6 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GOLDLION</title>
+    <!-- =========================
+         META PIXEL: ใส่ Pixel ID ได้ 3 ช่อง
+         ช่องที่ 1 ใส่ ID ที่คุณให้มาแล้ว
+         ช่องที่ 2 และ 3 เว้นว่างไว้ได้ หากยังไม่มี ID
+         ========================= -->
+    <script>
+    (function(f,b,e,v,n,t,s){
+      if(f.fbq)return;
+      n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;
+      n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s);
+    })(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+    // ช่องใส่ Pixel ID ทั้ง 3 ช่อง
+    const META_PIXEL_IDS = [
+      '2617238675337061', // ช่องที่ 1
+      '',                 // ช่องที่ 2: ใส่ ID ที่นี่
+      ''                  // ช่องที่ 3: ใส่ ID ที่นี่
+    ];
+
+    META_PIXEL_IDS
+      .map(id => String(id).trim())
+      .filter(id => /^\d+$/.test(id))
+      .forEach(id => fbq('init', id));
+
+    if (META_PIXEL_IDS.some(id => /^\d+$/.test(String(id).trim()))) {
+      fbq('track', 'PageView');
+    }
+    </script>
+    <!-- End Meta Pixel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
